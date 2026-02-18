@@ -39,26 +39,31 @@
         <img src="./images/teacher1.jpg" alt="Teacher 1">
         <h3>Jane Smith</h3>
         <p>Web Development Expert</p>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae, inventore unde perspiciatis pariatur molestias numquam nihil sed reiciendis natus assumenda!</p>
       </div>
       <div class="teacher-card">
         <img src="./images/teacher2.jpg" alt="Teacher 2">
-        <h3>John Doe</h3>
+        <h5>John Doe</h5>
         <p>C#</p>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae, inventore unde perspiciatis pariatur molestias numquam nihil sed reiciendis natus assumenda!</p>
       </div>
       <div class="teacher-card">
-        <img src="./images/teacher3.png" alt="Teacher 3">
+        <img src="./images/teacher3.avif" alt="Teacher 3">
         <h3>Julia</h3>
         <p>Java</p>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae, inventore unde perspiciatis pariatur molestias numquam nihil sed reiciendis natus assumenda!</p>
       </div>
       <div class="teacher-card">
         <img src="./images/teacher4.jpg" alt="Teacher 4">
         <h3>Cindy</h3>
         <p>Python</p>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae, inventore unde perspiciatis pariatur molestias numquam nihil sed reiciendis natus assumenda!</p>
       </div>
       <div class="teacher-card">
         <img src="./images/teacher5.jpg" alt="Teacher 5">
         <h3>Emily Johnson</h3>
         <p>Graphic Designer</p>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae, inventore unde perspiciatis pariatur molestias numquam nihil sed reiciendis natus assumenda!</p>
       </div>
     </div>
   </section>

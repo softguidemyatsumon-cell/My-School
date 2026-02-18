@@ -10,12 +10,12 @@ require "./layout/header.php";
           <input type="text" id="username" name="username" placeholder="Username" required>
         </div>
         <div class="input-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" placeholder="Password" required>
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="Email" required>
         </div>
         <div class="input-group">
-          <label for="confirm_password">Password</label>
-          <input type="password" id="password" name="confirm_password" placeholder="Confirm password" required>
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Password" required>
         </div>
         <button type="submit">Register</button>
         <p class="error-msg" id="errorMsg"></p>
