@@ -15,7 +15,7 @@ require "./layout/header.php";
         </div>
         <button type="submit">Login</button>
         <p class="error-msg" id="errorMsg"></p>
-        <span><a href="">create new account.</a></span>
+        <a href="register.php">Sign Up</a>
       </form>
     </div>
   </div>
