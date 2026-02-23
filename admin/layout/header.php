@@ -1,101 +1,176 @@
-<?php
-    require "../require/common.php";
-?>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Bootstrap Dashboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap CSS -->
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- fontawesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
         body {
-            overflow-x: hidden;
+            display: flex;
+            background: #f5f6fa;
         }
 
-        #sidebar {
-            min-width: 250px;
-            max-width: 250px;
-            min-height: 100vh;
-            transition: all 0.3s;
+        /* SIDEBAR */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: #5f63f2;
+            color: white;
+            transition: 0.3s;
+            overflow: hidden;
         }
 
-        #sidebar.collapsed {
-            margin-left: -250px;
+        .sidebar.collapsed {
+            width: 70px;
         }
 
-        #content {
-            transition: all 0.3s;
+        .sidebar-header {
+            padding: 20px;
+            font-size: 20px;
+            font-weight: bold;
         }
 
-        .sidebar-link {
-            text-decoration: none;
+        .menu-item {
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .menu-item:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .submenu {
+            background: rgba(0,0,0,0.1);
+            max-height: 0;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .submenu a {
             display: block;
-            padding: 10px 15px;
-            color: #333;
+            padding: 12px 40px;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
         }
 
-        .sidebar-link:hover {
-            background-color: #f1f1f1;
+        .submenu a:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .submenu.open {
+            max-height: 200px;
+        }
+
+        /* MAIN */
+        .main {
+            flex: 1;
+        }
+
+        /* TOPBAR */
+        .topbar {
+            background: white;
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            justify-content: space-between;
+        }
+
+        .toggle-btn {
+            font-size: 22px;
+            cursor: pointer;
+            margin-right: 20px;
+        }
+
+        /* CONTENT */
+        .content {
+            padding: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+
+        /* TEXT HIDE WHEN COLLAPSED */
+        .sidebar.collapsed .text {
+            display: none;
+        }
+
+        .arrow {
+            transition: 0.3s;
+        }
+
+        .rotate {
+            transform: rotate(90deg);
         }
     </style>
 </head>
+
 <body>
 
-<div class="d-flex">
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
 
-    <!-- Sidebar -->
-    <div id="sidebar" class="bg-light border-end">
-        <div class="p-3">
-            <h4>Dashboard</h4>
+        <div class="sidebar-header">
+            <span class="text">School</span>
         </div>
 
-        <a class="sidebar-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#admin" role="button">
-            Admin
-            <span><i class="fa-solid fa-angle-right"></i></span>
-        </a>
-        <div class="collapse ps-3" id="admin">
-            <a href="#" class="sidebar-link">Change Password</a>
+        <div class="menu-item">
+            <span><i class="fa-solid fa-house-chimney"></i> <span class="text">Dashboard</span></span>
         </div>
 
-        <a class="sidebar-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#course"  role="button">
-            Courses
-            <span><i class="fa-solid fa-angle-right"></i></span>
-        </a>
-        <div class="collapse ps-3" id="course">
-            <a href="<?= $admin_base_url .'course_list.php'?>" class="sidebar-link">List</a>
-            <a href="<?= $admin_base_url .'course_create.php'?>" class="sidebar-link">Create</a>
-        </div>
-        <a class="sidebar-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#teacher" role="button">
-            Teachers
-            <span><i class="fa-solid fa-angle-right"></i></span>
-        </a>
-        <div class="collapse ps-3" id="teacher">
-            <a href="<?= $admin_base_url .'teacher_list.php'?>" class="sidebar-link">List</a>
-            <a href="<?= $admin_base_url .'teacher_create.php'?>" class="sidebar-link">Create</a>
+        <!-- STUDENTS MENU -->
+        <div class="menu-item" id="studentMenu">
+            <span><i class="fa-solid fa-graduation-cap"></i> <span class="text">Students</span></span>
+            <span class="arrow" id="studentArrow"><i class="fa-solid fa-angle-right"></i></span>
         </div>
 
-        <a class="sidebar-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#student" role="button">
-            Students
-            <span><i class="fa-solid fa-angle-right"></i></span>
-        </a>
-        <div class="collapse ps-3" id="student">
-            <a href="<?= $admin_base_url .'student_list.php'?>" class="sidebar-link">List</a>
-            <a href="<?= $admin_base_url .'student_create.php'?>" class="sidebar-link">Create</a>
+        <div class="submenu" id="studentSubmenu">
+            <a href="#">List Students</a>
+            <a href="#">Create Student</a>
+        </div>
+        <!-- teacher menu -->
+        <div class="menu-item" id="teacherMenu">
+            <span><i class="fa-solid fa-user-graduate"></i> <span class="text">Teachers</span></span>
+            <span class="arrow" id="teacherArrow"><i class="fa-solid fa-angle-right"></i></span>
+        </div>
+        <div class="submenu" id="teacherSubmenu">
+            <a href="#">List Teacher</a>
+            <a href="#">Create Teacher</a>
+        </div>
+        <!-- course menu -->
+         <div class="menu-item" id="courseMenu">
+            <span><i class="fa-solid fa-book-open"></i> <span class="text">Courses</span></span>
+            <span class="arrow" id="courseArrow"><i class="fa-solid fa-angle-right"></i></span>
+        </div>
+        <div class="submenu" id="courseSubmenu">
+            <a href="#">List Course</a>
+            <a href="#">Create Course</a>
+        </div>
+        <!-- logout -->
+        <div class="menu-item btn btn-danger ms-3" style="width: 90%;">
+         <i class="fa-solid fa-right-from-bracket "></i>
         </div>
     </div>
 
-    <!-- Content -->
-    <div id="content" class="flex-grow-1">
-        <!-- Top Navbar -->
-        <nav class="navbar navbar-light bg-white border-bottom px-3">
-            <button id="toggleBtn" class="btn btn-outline-primary">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-            <span class="ms-3 fw-bold">My Dashboard</span>
-        </nav>
+    <!-- MAIN -->
+    <div class="main">
+
+        <!-- TOPBAR -->
+        <div class="topbar">
+            <span class="toggle-btn btn btn-outline-primary" id="toggleSidebar"><i class="fa-solid fa-bars"></i></span>            
+            <div><i class="fa-solid fa-user-tie me-2"></i>Admin</div>
+        </div>

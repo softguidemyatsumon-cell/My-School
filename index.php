@@ -1,6 +1,35 @@
-  <?php
-  require "./layout/header.php";
-  ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- css -->
+  <link rel="stylesheet" href="style.css">
+  <title>My School</title>
+ 
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">My School</div>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#courses">Courses</a></li>
+      <li><a href="#teachers">Teachers</a></li>
+      <li><a href="#testimonials">Testimonials</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a class="sign-in-btn" href="./login.php">
+        <i class="fa-solid fa-user-lock me-2"></i>Sign in
+    </a>
+  </nav>
+
+  
   <!-- Home Section -->
     <div class="image-container" id="home">
       <img src="./images/school2.jpg" alt="School Classroom" class="hero-image">
@@ -120,8 +149,40 @@
         </div>   
   </section> 
 </section>
-<?php
-require "./layout/footer.php";
-?>
+<!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+        <div class="footer-section">
+            <h3>My School</h3>
+            <p>Empowering learners with practical skills and modern education.</p>
+        </div>
+
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Courses</a></li>
+                <li><a href="#">Teachers</a></li>
+                <li><a href="#">Testimonials</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h4>Contact</h4>
+            <p>Email: info@myschool.com</p>
+            <p>Phone: +1 234 567 890</p>
+            <p>Address:No(575B),Kamayut Township, Yangon , Myanmar</p>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2026 My School. All Rights Reserved.</p>
+    </div>
+</footer>
+
+
+</body>
+</html>
 
   
