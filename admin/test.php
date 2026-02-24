@@ -2,35 +2,29 @@
 require "../config/db_connection.php";
 require "../require/common.php";
 
-if (isset($_POST['create'])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $name = $_POST['name'];
-    $class = $_POST['class'];
     $gender = $_POST['gender'];
-    $date_of_birth = $_POST['date_of_birth'];
+    $email = $_POST['email'];
     $phone = $_POST['phone'];
-    $parent_name = $_POST['parent_name'];
+    $qualification = $_POST['qualification'];
+    $date_of_joining = $_POST['date_of_joining'];
+    $salary = $_POST['salary'];
     $status = $_POST['status'];
 
-  // Check required fields
-    if (!empty($name) && !empty($class)) {
+    if (!empty($name) && !empty($email)) {
 
-        $stmt = $conn->prepare("INSERT INTO students (name, class, gender, date_of_birth, phone, parent_name, status) 
-        VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssdsss", $name, $class, $gender, $date_of_birth, $phone, $parent_name, $status);
+        $sql = "INSERT INTO teachers 
+                (name, gender, email, phone, qualification, date_of_joining, salary, status)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        // Execute the statement
-        if ($stmt->execute()) {
-            $success = "Student Created Successfully!";
-        } else {
-            $error = "Error: " . $stmt->error;
-        }
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$name, $gender, $email, $phone, $qualification, $date_of_joining, $salary, $status]);
 
-        // Close statement
-        $stmt->close();
-
+        $success = "Teacher Created Successfully!";
     } else {
-        $error = "Name and Class are required!";
+        $error = "Name and Email are required!";
     }
 }
 require "layout/header.php";
@@ -38,10 +32,10 @@ require "layout/header.php";
 
 <div class="container mt-5">
 
-    <div class="card shadow-sm h-100vh">
+    <div class="card shadow-sm">
         <div class="card-body">
 
-            <h4 class="mb-4">Create Student</h4>
+            <h4 class="mb-4">Create Teacher</h4>
 
             <?php if(isset($success)): ?>
                 <div class="alert alert-success"><?= $success ?></div>
@@ -57,22 +51,18 @@ require "layout/header.php";
                     <label>Name</label>
                     <input type="text" name="name" class="form-control">
                 </div>
-                <div class="mb-3">
-                    <label>Class</label>
-                    <input type="text" name="class" class="form-control">
-                </div>
 
                 <div class="mb-3">
                     <label>Gender</label>
-                    <select name="gender" class="form-select">
+                    <select name="gender" class="form-control">
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                     </select>
                 </div>
 
                 <div class="mb-3">
-                    <label>Date Of Birth</label>
-                    <input type="date" name="date_of_birth" class="form-control">
+                    <label>Email</label>
+                    <input type="email" name="email" class="form-control">
                 </div>
 
                 <div class="mb-3">
@@ -81,18 +71,29 @@ require "layout/header.php";
                 </div>
 
                 <div class="mb-3">
-                    <label>Parent Name</label>
-                    <input type="text" name="parent_name" class="form-control">
+                    <label>Qualification</label>
+                    <input type="text" name="qualification" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label>Date of Joining</label>
+                    <input type="date" name="date_of_joining" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label>Salary</label>
+                    <input type="number" name="salary" class="form-control">
                 </div>
 
                 <div class="mb-3">
                     <label>Status</label>
-                    <select name="status" class="form-select">
+                    <select name="status" class="form-control">
                         <option value="1">Active</option>
                         <option value="0">Inactive</option>
                     </select>
                 </div>
-                <button class="btn btn-primary" name="create">Save Student</button>
+
+                <button class="btn btn-primary">Save Teacher</button>
 
             </form>
 

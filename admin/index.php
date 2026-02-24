@@ -3,8 +3,10 @@
 ?>
          <!-- CONTENT -->
         <div class="content">
-            <div class="card">Welcome to Dashboard</div>
+            <span class="card shadow-sm text-primary fs-4 font-poppins" id="welcome">Welcome  Admin</span>
         </div>
+
+        
 <?php
     require ("layout/footer.php");
 ?>

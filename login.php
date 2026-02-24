@@ -5,15 +5,15 @@ require "./require/common.php";
 $error = "";
 
 if (isset($_POST["login"])) {
-    $name = trim($_POST["name"]);
+    $username = trim($_POST["username"]);
     $password = $_POST["password"];
 
-    if (empty($name) || empty($password)) {
+    if (empty($username) || empty($password)) {
         $error = "Please fill username and password!";
     } else {
         // Fetch user by name
-        $stmt = $conn->prepare("SELECT id, role, password FROM users WHERE name = ?");
-        $stmt->bind_param("s", $name);
+        $stmt = $conn->prepare("SELECT * FROM users WHERE user_name = ?");
+        $stmt->bind_param("s", $username);
         $stmt->execute();
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
@@ -74,14 +74,14 @@ if (isset($_POST["login"])) {
             <form id="loginForm" method="POST">
                 <div class="input-group">
                     <label for="username">Username</label>
-                    <input type="text" id="name" name="name" placeholder="Enter username" autocomplete="off" required>
+                    <input type="text" id="username" name="username" placeholder="Enter username" autocomplete="off">
                 </div>
                 <div class="input-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" placeholder="Enter password" autocomplete="off" required>
+                    <input type="password" id="password" name="password" placeholder="Enter password" autocomplete="off">
                 </div>
                 <button type="submit" name="login">Login</button>
-                <span class="mt-5">Don't have an account? <a href="register.php">Sign Up</a> now</span>
+                <!-- <span class="mt-5">Don't have an account? <a href="register.php">Sign Up</a> now</span> -->
             </form>
         </div>
     </div>

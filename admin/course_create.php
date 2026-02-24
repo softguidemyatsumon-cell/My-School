@@ -1,63 +1,84 @@
 <?php
-    require "../config/db_connection.php";
-    require "../require/common.php";
+require "../config/db_connection.php";
+require "../require/common.php";
 
+if (isset($_POST['create'])) {
 
+    $course_name = $_POST['course_name'];
+    $class = $_POST['class'];
+    $teacher = $_POST['teacher'];
+    $status = $_POST['status'];
 
+  // Check required fields
+    if (!empty($course_name) && !empty($class)) {
 
+        $stmt = $conn->prepare("INSERT INTO courses (course_name, class, teacher, status) 
+        VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("ssss", $course_name, $class, $teacher, $status);
 
-    require "layout/header.php";
+        // Execute the statement
+        if ($stmt->execute()) {
+            $success = "Course Created Successfully!";
+        } else {
+            $error = "Error: " . $stmt->error;
+        }
+
+        // Close statement
+        $stmt->close();
+
+    } else {
+        $error = "Course Name and Class are required!";
+    }
+}
+require "layout/header.php";
 ?>
-    <div class="content-body">
 
-    <!-- <div class="row page-titles mx-0">
-        <div class="col p-md-0">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
-                <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
-            </ol>
-        </div>
-    </div> -->
+<div class="container mt-5">
 
-    <div class="container-fluid">
-        <div class="justify-content-between d-flex mb-3 mt-5">
-            <h1>Courses List</h1>
-            <a href="<?= $admin_base_url . 'payment_create.php' ?>" class="btn btn-primary">
-                Create Course
-            </a>
-        </div>
+    <div class="card shadow-sm h-100vh">
+        <div class="card-body">
 
-        <div class="row">
-            
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
+            <h4 class="mb-4">Create Student</h4>
 
-                        <table class="table table-hover table-sm">
-                            <thead>
-                                <tr>
-                                    <th class="col-1">No</th>
-                                    <th class="col-5">Name</th>
-                                    <th class="col-2">Created at</th>
-                                    <th class="col-2">Updated at</th>
-                                    <th class="col-2">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+            <?php if(isset($success)): ?>
+                <div class="alert alert-success"><?= $success ?></div>
+            <?php endif; ?>
 
-                                
+            <?php if(isset($error)): ?>
+                <div class="alert alert-danger"><?= $error ?></div>
+            <?php endif; ?>
 
-                            </tbody>
-                        </table>
+            <form method="POST">
 
-                    </div>
+                <div class="mb-3">
+                    <label>Course Name</label>
+                    <input type="text" name="course_name" class="form-control">
                 </div>
-            </div>
+                <div class="mb-3">
+                    <label>Class</label>
+                    <input type="text" name="class" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label>Teacher</label>
+                    <input type="text" name="teacher" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label>Status</label>
+                    <select name="status" class="form-select">
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" name="create">Save Course</button>
+
+            </form>
+
         </div>
-
     </div>
-</div>
 
+</div>
 <?php
     require "layout/footer.php";
 ?>

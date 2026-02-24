@@ -4,6 +4,11 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- google font -->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Italianno&family=MonteCarlo&family=Mountains+of+Christmas:wght@400;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     <style>
         * {
             margin: 0;
@@ -20,7 +25,7 @@
         /* SIDEBAR */
         .sidebar {
             width: 250px;
-            height: 100vh;
+            height: 110vh;
             background: #5f63f2;
             color: white;
             transition: 0.3s;
@@ -77,15 +82,7 @@
         }
 
         /* TOPBAR */
-        .topbar {
-            background: white;
-            padding: 15px 25px;
-            display: flex;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            justify-content: space-between;
-        }
-
+      
         .toggle-btn {
             font-size: 22px;
             cursor: pointer;
@@ -116,6 +113,63 @@
         .rotate {
             transform: rotate(90deg);
         }
+        /* th{
+            font-weight: 600;
+            white-space: nowrap;
+        } */
+            /* topbar admin */
+        .admin-menu {
+        /* position: relative;
+        display: inline-block; */
+        background: white;
+        padding: 15px 25px;
+        display: flex;
+        align-items: center;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        justify-content: space-between;
+    }
+
+    .admin-button {
+        background: white;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .dropdown {
+        position: absolute;
+        right: 0;
+        top: 35px;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        min-width: 120px;
+    }
+
+    .dropdown a {
+        display: block;
+        padding: 10px;
+        text-decoration: none;
+        color: black;
+    }
+
+    .dropdown a:hover {
+        background: #f5f5f5;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    /* font */
+    #welcome {
+ font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
     </style>
 </head>
 
@@ -130,26 +184,26 @@
 
         <div class="menu-item">
             <span><i class="fa-solid fa-house-chimney"></i> <span class="text">Dashboard</span></span>
-        </div>
-
-        <!-- STUDENTS MENU -->
-        <div class="menu-item" id="studentMenu">
-            <span><i class="fa-solid fa-graduation-cap"></i> <span class="text">Students</span></span>
-            <span class="arrow" id="studentArrow"><i class="fa-solid fa-angle-right"></i></span>
-        </div>
-
-        <div class="submenu" id="studentSubmenu">
-            <a href="#">List Students</a>
-            <a href="#">Create Student</a>
-        </div>
+        </div>      
         <!-- teacher menu -->
         <div class="menu-item" id="teacherMenu">
             <span><i class="fa-solid fa-user-graduate"></i> <span class="text">Teachers</span></span>
             <span class="arrow" id="teacherArrow"><i class="fa-solid fa-angle-right"></i></span>
         </div>
         <div class="submenu" id="teacherSubmenu">
-            <a href="#">List Teacher</a>
-            <a href="#">Create Teacher</a>
+            <a href="teacher_create.php">Create Teacher</a>
+            <a href="teacher_list.php">List Teacher</a>
+        </div>
+
+          <!-- STUDENTS MENU -->
+        <div class="menu-item" id="studentMenu">
+            <span><i class="fa-solid fa-user"></i> <span class="text">Students</span></span>
+            <span class="arrow" id="studentArrow"><i class="fa-solid fa-angle-right"></i></span>
+        </div>
+
+        <div class="submenu" id="studentSubmenu">
+            <a href="student_list.php">List Students</a>
+            <a href="student_create.php">Create Student</a>
         </div>
         <!-- course menu -->
          <div class="menu-item" id="courseMenu">
@@ -157,12 +211,14 @@
             <span class="arrow" id="courseArrow"><i class="fa-solid fa-angle-right"></i></span>
         </div>
         <div class="submenu" id="courseSubmenu">
-            <a href="#">List Course</a>
-            <a href="#">Create Course</a>
+            <a href="course_list.php">List Course</a>
+            <a href="course_create.php">Create Course</a>
         </div>
         <!-- logout -->
-        <div class="menu-item btn btn-danger ms-3" style="width: 90%;">
-         <i class="fa-solid fa-right-from-bracket "></i>
+        <div class="ms-4">
+            <a href="../index.php" style="text-decoration: none; color:#ffff">
+         <i class="fa-solid fa-right-from-bracket me-2"></i>Logout
+             </a>
         </div>
     </div>
 
@@ -170,7 +226,13 @@
     <div class="main">
 
         <!-- TOPBAR -->
-        <div class="topbar">
+        <div class="admin-menu">
             <span class="toggle-btn btn btn-outline-primary" id="toggleSidebar"><i class="fa-solid fa-bars"></i></span>            
-            <div><i class="fa-solid fa-user-tie me-2"></i>Admin</div>
+            <button id="adminBtn" class="admin-button"><i class="fa-solid fa-user-tie me-2"></i>Admin</button>
+      
+            <div id="dropdown" class="dropdown hidden">
+                <a href="../index.php">Logout</a>
+            </div>
+
+     
         </div>

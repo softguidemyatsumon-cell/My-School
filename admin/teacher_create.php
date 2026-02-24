@@ -1,117 +1,112 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Bootstrap Dashboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<?php
+require "../config/db_connection.php";
+require "../require/common.php";
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- fontawesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+if (isset($_POST['create'])) {
 
-    <style>
-        body {
-            overflow-x: hidden;
+    $name = $_POST['name'];
+    $gender = $_POST['gender'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    $qualification = $_POST['qualification'];
+    $join_date = $_POST['join_date'];
+    $salary = $_POST['salary'];
+    $status = $_POST['status'];
+
+  // Check required fields
+    if (!empty($name) && !empty($email)) {
+
+        $stmt = $conn->prepare("INSERT INTO teachers (name, gender, email, phone, qualification, join_date, salary, status) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssssds", $name, $gender, $email, $phone, $qualification, $join_date, $salary, $status);
+
+        // Execute the statement
+        if ($stmt->execute()) {
+            $success = "Teacher Created Successfully!";
+        } else {
+            $error = "Error: " . $stmt->error;
         }
 
-        #sidebar {
-            min-width: 250px;
-            max-width: 250px;
-            min-height: 100vh;
-            transition: all 0.3s;
-        }
+        // Close statement
+        $stmt->close();
 
-        #sidebar.collapsed {
-            margin-left: -250px;
-        }
+    } else {
+        $error = "Name and Email are required!";
+    }
+}
+require "layout/header.php";
+?>
 
-        #content {
-            transition: all 0.3s;
-        }
+<div class="container mt-5">
 
-        .sidebar-link {
-            text-decoration: none;
-            display: block;
-            padding: 10px 15px;
-            color: #333;
-        }
+    <div class="card shadow-sm h-100vh">
+        <div class="card-body">
 
-        .sidebar-link:hover {
-            background-color: #f1f1f1;
-        }
-    </style>
-</head>
-<body>
+            <h4 class="mb-4">Create Teacher</h4>
 
-<div class="d-flex">
+            <?php if(isset($success)): ?>
+                <div class="alert alert-success"><?= $success ?></div>
+            <?php endif; ?>
 
-    <!-- Sidebar -->
-    <div id="sidebar" class="bg-light border-end">
-        <div class="p-3">
-            <h4>Dashboard</h4>
-        </div>
+            <?php if(isset($error)): ?>
+                <div class="alert alert-danger"><?= $error ?></div>
+            <?php endif; ?>
 
-        <a class="sidebar-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#admin" role="button">
-            Admin
-            <span><i class="fa-solid fa-angle-right"></i></span>
-        </a>
-        <div class="collapse ps-3" id="admin">
-            <a href="#" class="sidebar-link">Change Password</a>
-        </div>
+            <form method="POST">
 
-        <a class="sidebar-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#course"  role="button">
-            Courses
-            <span><i class="fa-solid fa-angle-right"></i></span>
-        </a>
-        <div class="collapse ps-3" id="course">
-            <a href="" class="sidebar-link">List</a>
-            <a href="course/create.php" class="sidebar-link">Create</a>
-        </div>
-        <a class="sidebar-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#teacher" role="button">
-            Teachers
-            <span><i class="fa-solid fa-angle-right"></i></span>
-        </a>
-        <div class="collapse ps-3" id="teacher">
-            <a href="#" class="sidebar-link">List</a>
-            <a href="#" class="sidebar-link">Create</a>
-        </div>
+                <div class="mb-3">
+                    <label>Name</label>
+                    <input type="text" name="name" class="form-control">
+                </div>
 
-        <a class="sidebar-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#student" role="button">
-            Students
-            <span><i class="fa-solid fa-angle-right"></i></span>
-        </a>
-        <div class="collapse ps-3" id="student">
-            <a href="#" class="sidebar-link">List</a>
-            <a href="#" class="sidebar-link">Create</a>
+                <div class="mb-3">
+                    <label>Gender</label>
+                    <select name="gender" class="form-select">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label>Email</label>
+                    <input type="email" name="email" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label>Phone</label>
+                    <input type="text" name="phone" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label>Qualification</label>
+                    <input type="text" name="qualification" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label>Date of Joining</label>
+                    <input type="date" name="join_date" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label>Salary</label>
+                    <input type="number" name="salary" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label>Status</label>
+                    <select name="status" class="form-select">
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" name="create">Save Teacher</button>
+
+            </form>
+
         </div>
     </div>
 
-    <!-- Content -->
-    <div id="content" class="flex-grow-1">
-        <!-- Top Navbar -->
-        <nav class="navbar navbar-light bg-white border-bottom px-3">
-            <button id="toggleBtn" class="btn btn-outline-primary">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-            <span class="ms-3 fw-bold">My Dashboard</span>
-        </nav>
-        <!-- Main Content -->
-        
-    </div>
 </div>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-<script>
-    const toggleBtn = document.getElementById('toggleBtn');
-    const sidebar = document.getElementById('sidebar');
-
-    toggleBtn.addEventListener('click', () => {
-        sidebar.classList.toggle('collapsed');
-    });
-</script>
-
-</body>
-</html>
+<?php
+    require "layout/footer.php";
+?>

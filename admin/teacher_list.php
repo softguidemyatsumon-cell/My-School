@@ -1,116 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Bootstrap Dashboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<?php
+    require "../config/db_connection.php";
+    require "../require/common.php";
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- fontawesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    $sql=mysqli_query($conn,"SELECT * FROM teachers");
 
-    <style>
-        body {
-            overflow-x: hidden;
-        }
-
-        #sidebar {
-            min-width: 250px;
-            max-width: 250px;
-            min-height: 100vh;
-            transition: all 0.3s;
-        }
-
-        #sidebar.collapsed {
-            margin-left: -250px;
-        }
-
-        #content {
-            transition: all 0.3s;
-        }
-
-        .sidebar-link {
-            text-decoration: none;
-            display: block;
-            padding: 10px 15px;
-            color: #333;
-        }
-
-        .sidebar-link:hover {
-            background-color: #f1f1f1;
-        }
-    </style>
-</head>
-<body>
-
-<div class="d-flex">
-
-    <!-- Sidebar -->
-    <div id="sidebar" class="bg-light border-end">
-        <div class="p-3">
-            <h4>Dashboard</h4>
+    require "layout/header.php";
+?>
+    <div class="content-body">
+    <div class="container-fluid">
+        <div class="justify-content-between d-flex mb-3 mt-5">
+            <h1>Teachers List</h1>
+            <a href="<?= $admin_base_url . 'teacher_create.php' ?>" class="btn btn-primary">
+                Create Teacher
+            </a>
         </div>
 
-        <a class="sidebar-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#admin" role="button">
-            Admin
-            <span><i class="fa-solid fa-angle-right"></i></span>
-        </a>
-        <div class="collapse ps-3" id="admin">
-            <a href="#" class="sidebar-link">Change Password</a>
+        <div class="row">            
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-hover table-sm">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th class="col-2">Name</th>
+                                    <th>Gender</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Qualification</th>
+                                    <th>Date of joining</th>
+                                    <th>Salary</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $no=1;
+                                while($row=mysqli_fetch_assoc($sql)):
+                                ?>
+                                <tr>
+                                    <td><?= $no++ ?></td>
+                                    <td><?=$row['name']?></td>
+                                    <td><?=$row['gender']?></td>
+                                    <td><?=$row['email']?></td>
+                                    <td><?=$row['phone']?></td>
+                                    <td><?=$row['qualification']?></td>
+                                    <td><?=$row['join_date']?></td>
+                                    <td><?=$row['salary']?></td>
+                                    <td>
+                                        <a href="teacher_edit.php?id=<?= $row['id']; ?>" class="text-primary text-decoration-none me-3"><i class="fa-regular fa-pen-to-square me-1"></i>Update</a>
+                                        <a href="teacher_delete.php?id=<?= $row['id']; ?>" onclick="return confirm('Are you sure you want to delete this teacher?');" class="text-danger text-decoration-none">
+                                            <i class="fa-solid fa-trash-can me-1"></i>Delete</a>
+                                    </td>
+                                </tr>
+                                <?php endwhile; ?>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <a class="sidebar-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#course"  role="button">
-            Courses
-            <span><i class="fa-solid fa-angle-right"></i></span>
-        </a>
-        <div class="collapse ps-3" id="course">
-            <a href="course/list.php" class="sidebar-link">List</a>
-            <a href="course/create.php" class="sidebar-link">Create</a>
-        </div>
-        <a class="sidebar-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#teacher" role="button">
-            Teachers
-            <span><i class="fa-solid fa-angle-right"></i></span>
-        </a>
-        <div class="collapse ps-3" id="teacher">
-            <a href="#" class="sidebar-link">List</a>
-            <a href="#" class="sidebar-link">Create</a>
-        </div>
-
-        <a class="sidebar-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#student" role="button">
-            Students
-            <span><i class="fa-solid fa-angle-right"></i></span>
-        </a>
-        <div class="collapse ps-3" id="student">
-            <a href="#" class="sidebar-link">List</a>
-            <a href="#" class="sidebar-link">Create</a>
-        </div>
-    </div>
-
-    <!-- Content -->
-    <div id="content" class="flex-grow-1">
-        <!-- Top Navbar -->
-        <nav class="navbar navbar-light bg-white border-bottom px-3">
-            <button id="toggleBtn" class="btn btn-outline-primary">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-            <span class="ms-3 fw-bold">My Dashboard</span>
-        </nav>
-        <!-- Main Content -->
     </div>
 </div>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-<script>
-    const toggleBtn = document.getElementById('toggleBtn');
-    const sidebar = document.getElementById('sidebar');
-
-    toggleBtn.addEventListener('click', () => {
-        sidebar.classList.toggle('collapsed');
-    });
-</script>
-
-</body>
-</html>
+<?php
+    require "layout/footer.php";
+?>

@@ -37,6 +37,21 @@
         courseSubmenu.classList.toggle("open");
         courseArrow.classList.toggle("rotate");
     };
+
+    const adminBtn = document.getElementById("adminBtn");
+    const dropdown = document.getElementById("dropdown");
+
+    adminBtn.addEventListener("click", () => {
+        dropdown.classList.toggle("hidden");
+    });
+
+    // Optional: Close when clicking outside
+    document.addEventListener("click", (event) => {
+        if (!adminBtn.contains(event.target) && !dropdown.contains(event.target)) {
+            dropdown.classList.add("hidden");
+        }
+    });
+
 </script>
 
 </body>
