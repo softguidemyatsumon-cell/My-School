@@ -11,7 +11,7 @@
         <div class="justify-content-between d-flex mb-3 mt-5">
             <h1>Teachers List</h1>
             <a href="<?= $admin_base_url . 'teacher_create.php' ?>" class="btn btn-primary">
-                <i class="fa-solid fa-plus me-3 pt-2"></i>Add Teacher
+                Create Teacher
             </a>
         </div>
 

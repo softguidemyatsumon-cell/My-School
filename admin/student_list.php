@@ -9,9 +9,9 @@
     <div class="content-body">
     <div class="container-fluid">
         <div class="justify-content-between d-flex mb-3 mt-5">
-            <h1>Teachers List</h1>
+            <h1>Student List</h1>
             <a href="<?= $admin_base_url . 'student_create.php' ?>" class="btn btn-primary">
-                Create student
+               <i class="fa-solid fa-plus me-2 pt-2"></i> Add student
             </a>
         </div>
 
@@ -28,6 +28,7 @@
                                     <th>Gender</th>
                                     <th>Date Of Birth</th>
                                     <th>Phone</th>
+                                    <th>Email</th>
                                     <th>Parent Name</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -45,6 +46,7 @@
                                     <td><?=$row['gender']?></td>
                                     <td><?=$row['date_of_birth']?></td>
                                     <td><?=$row['phone']?></td>
+                                    <td><?=$row['email']?></td>
                                     <td><?=$row['parent_name']?></td>
                                     <td><?=$row['status']?></td>
                                     <td>
@@ -56,7 +58,19 @@
                                 <?php endwhile; ?>
                             </tbody>
                         </table>
-
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item disabled">
+                                <a class="page-link">Previous</a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                <a class="page-link" href="#">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>

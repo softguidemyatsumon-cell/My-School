@@ -41,6 +41,7 @@
         courseSubmenu.classList.toggle("open");
         courseArrow.classList.toggle("rotate");
     };
+
     // Mark submenu collespe
      markMenu.onclick = () => {
         markSubmenu.classList.toggle("open");

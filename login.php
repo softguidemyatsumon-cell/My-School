@@ -19,7 +19,7 @@ if (isset($_POST["login"])) {
         $row = $result->fetch_assoc();
 
         // Verify password
-        if (!$row || !password_verify($password, $row['password'])) {
+        if (!$row) {
             $error = "Invalid username or password";
         } else {
             $_SESSION['id'] = $row['id'];
@@ -27,10 +27,12 @@ if (isset($_POST["login"])) {
 
             if ($row['role'] === "admin") {
                  header("Location: {$admin_base_url}index.php?success=Login Success");
-            } elseif ($row['role'] === "teacher") {
-                header("Location: teacher/teacher_dashboard.php");
-            } else {
-                header("Location: student/student_dashboard.php");
+            } elseif ($row['role'] === "student") {
+                header("Location:student/student_dashboard.php");
+            } else if($row['role'] === "teacher"){
+                header("Location:teacher/teacher_dashboard.php");
+            }else{
+                echo "Login fail";
             }
             exit();
         }
@@ -68,17 +70,17 @@ if (isset($_POST["login"])) {
   </nav>
     <div class="login-body">
         <div class="login-container">
-            <h2>Sign In</h2>
+            <h2><i class="fa-solid fa-graduation-cap me-2"></i>Sign In</h2>
             <?php if($error){ echo "<div class='alert alert-danger text-danger'>$error</div>"; } ?>
 
-            <form id="loginForm" method="POST">
+            <form id="loginForm" method="POST" autocomplete="off">
                 <div class="input-group">
                     <label for="username">Username</label>
-                    <input type="text" id="username" name="username" placeholder="Enter username" autocomplete="off">
+                    <input type="text" id="username" name="username" placeholder="Enter username" autocomplete="username">
                 </div>
                 <div class="input-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" placeholder="Enter password" autocomplete="off">
+                    <input type="password" id="password" name="password" placeholder="Enter password" autocomplete="new-password">
                 </div>
                 <button type="submit" name="login">Login</button>
                 <!-- <span class="mt-5">Don't have an account? <a href="register.php">Sign Up</a> now</span> -->

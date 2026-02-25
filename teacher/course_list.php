@@ -2,16 +2,16 @@
     require "../config/db_connection.php";
     require "../require/common.php";
 
-    $sql=mysqli_query($conn,"SELECT * FROM teachers");
+    $sql=mysqli_query($conn,"SELECT * FROM courses");
 
     require "layout/header.php";
 ?>
     <div class="content-body">
     <div class="container-fluid">
         <div class="justify-content-between d-flex mb-3 mt-5">
-            <h1>Teachers List</h1>
-            <a href="<?= $admin_base_url . 'teacher_create.php' ?>" class="btn btn-primary">
-                <i class="fa-solid fa-plus me-3 pt-2"></i>Add Teacher
+            <h1>Course List</h1>
+            <a href="<?= $admin_base_url . 'course_create.php' ?>" class="btn btn-primary">
+                Create student
             </a>
         </div>
 
@@ -23,13 +23,8 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th class="col-2">Name</th>
-                                    <th>Gender</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>Qualification</th>
-                                    <th>Date of joining</th>
-                                    <th>Salary</th>
+                                    <th class="col-3">Course Name</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -40,16 +35,11 @@
                                 ?>
                                 <tr>
                                     <td><?= $no++ ?></td>
-                                    <td><?=$row['name']?></td>
-                                    <td><?=$row['gender']?></td>
-                                    <td><?=$row['email']?></td>
-                                    <td><?=$row['phone']?></td>
-                                    <td><?=$row['qualification']?></td>
-                                    <td><?=$row['join_date']?></td>
-                                    <td><?=$row['salary']?></td>
+                                    <td><?=$row['course_name']?></td>
+                                    <td><?=$row['status']?></td>
                                     <td>
-                                        <a href="teacher_edit.php?id=<?= $row['id']; ?>" class="text-primary text-decoration-none me-3"><i class="fa-regular fa-pen-to-square me-1"></i>Update</a>
-                                        <a href="teacher_delete.php?id=<?= $row['id']; ?>" onclick="return confirm('Are you sure you want to delete this teacher?');" class="text-danger text-decoration-none">
+                                        <a href="course_edit.php?id=<?= $row['id']; ?>" class="text-primary me-3 text-decoration-none"><i class="fa-regular fa-pen-to-square me-1"></i>Update</a>
+                                        <a href="course_delete.php?id=<?= $row['id']; ?>" onclick="return confirm('Are you sure you want to delete this teacher?');" class="text-danger text-decoration-none">
                                             <i class="fa-solid fa-trash-can me-1"></i>Delete</a>
                                     </td>
                                 </tr>

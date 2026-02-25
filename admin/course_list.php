@@ -9,9 +9,9 @@
     <div class="content-body">
     <div class="container-fluid">
         <div class="justify-content-between d-flex mb-3 mt-5">
-            <h1>Teachers List</h1>
+            <h1>Course List</h1>
             <a href="<?= $admin_base_url . 'course_create.php' ?>" class="btn btn-primary">
-                Create student
+                <i class="fa-solid fa-plus me-3 pt-2"></i>Add Course
             </a>
         </div>
 
@@ -24,8 +24,6 @@
                                 <tr>
                                     <th>No</th>
                                     <th class="col-3">Course Name</th>
-                                    <th>Class</th>
-                                    <th>Teacher</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -38,8 +36,6 @@
                                 <tr>
                                     <td><?= $no++ ?></td>
                                     <td><?=$row['course_name']?></td>
-                                    <td><?=$row['class']?></td>
-                                    <td><?=$row['teacher']?></td>
                                     <td><?=$row['status']?></td>
                                     <td>
                                         <a href="course_edit.php?id=<?= $row['id']; ?>" class="text-primary me-3 text-decoration-none"><i class="fa-regular fa-pen-to-square me-1"></i>Update</a>

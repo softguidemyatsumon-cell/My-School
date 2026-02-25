@@ -2,6 +2,10 @@
 require "../config/db_connection.php";
 require "../require/common.php";
 
+function old($key) {
+    return isset($_POST[$key]) ? htmlspecialchars($_POST[$key]) : '';
+}
+
 if (isset($_POST['create'])) {
 
     $name = $_POST['name'];
@@ -13,27 +17,70 @@ if (isset($_POST['create'])) {
     $salary = $_POST['salary'];
     $status = $_POST['status'];
 
-  // Check required fields
-    if (!empty($name) && !empty($email)) {
+    // ✅ Basic validation
+    if (empty($name) || empty($email)) {
+        $error = "Name and Email are required!";
+    } else {
 
-        $stmt = $conn->prepare("INSERT INTO teachers (name, gender, email, phone, qualification, join_date, salary, status) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssssds", $name, $gender, $email, $phone, $qualification, $join_date, $salary, $status);
+        // ✅ Check if email already exists
+        $check = $conn->prepare("SELECT id FROM users WHERE user_name = ?");
+        $check->bind_param("s", $email);
+        $check->execute();
+        $check->store_result();
 
-        // Execute the statement
-        if ($stmt->execute()) {
-            $success = "Teacher Created Successfully!";
+        if ($check->num_rows > 0) {
+
+            // Email exists
+            $error = "Email already exists!";
+
         } else {
-            $error = "Error: " . $stmt->error;
+
+            $default_password = password_hash("teacher123", PASSWORD_DEFAULT);
+            $default_role = "teacher";
+
+            // Insert user
+            $user = $conn->prepare("INSERT INTO users (user_name, password, role) VALUES (?, ?, ?)");
+            $user->bind_param("sss", $email, $default_password, $default_role);
+
+            if ($user->execute()) {
+
+                $user_id = $conn->insert_id;
+
+                // Insert teacher
+                $stmt = $conn->prepare("INSERT INTO teachers 
+                    (name, user_id, gender, email, phone, qualification, join_date, salary, status) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+                $stmt->bind_param(
+                    "sisssssds",
+                    $name,
+                    $user_id,
+                    $gender,
+                    $email,
+                    $phone,
+                    $qualification,
+                    $join_date,
+                    $salary,
+                    $status
+                );
+
+                if ($stmt->execute()) {
+                    $success = "Teacher Created Successfully!";
+                } else {
+                    $error = "Teacher Error: " . $stmt->error;
+                }
+
+                $stmt->close();
+
+            } else {
+                $error = "User Error: " . $user->error;
+            }
         }
 
-        // Close statement
-        $stmt->close();
-
-    } else {
-        $error = "Name and Email are required!";
+        $check->close();
     }
 }
+
 require "layout/header.php";
 ?>
 
@@ -56,7 +103,7 @@ require "layout/header.php";
 
                 <div class="mb-3">
                     <label>Name</label>
-                    <input type="text" name="name" class="form-control">
+                    <input type="text" name="name" class="form-control" value="<?= old('name') ?>">
                 </div>
 
                 <div class="mb-3">
@@ -69,27 +116,27 @@ require "layout/header.php";
 
                 <div class="mb-3">
                     <label>Email</label>
-                    <input type="email" name="email" class="form-control">
+                    <input type="email" name="email" class="form-control" value="<?= old('email') ?>">
                 </div>
 
                 <div class="mb-3">
                     <label>Phone</label>
-                    <input type="text" name="phone" class="form-control">
+                    <input type="text" name="phone" class="form-control" value="<?= old('phone') ?>">
                 </div>
 
                 <div class="mb-3">
                     <label>Qualification</label>
-                    <input type="text" name="qualification" class="form-control">
+                    <input type="text" name="qualification" class="form-control" value="<?= old('qualification') ?>">
                 </div>
 
                 <div class="mb-3">
                     <label>Date of Joining</label>
-                    <input type="date" name="join_date" class="form-control">
+                    <input type="date" name="join_date" class="form-control" value="<?= old('join_date') ?>">
                 </div>
 
                 <div class="mb-3">
                     <label>Salary</label>
-                    <input type="number" name="salary" class="form-control">
+                    <input type="number" name="salary" class="form-control" value="<?= old('salary') ?>">
                 </div>
 
                 <div class="mb-3">

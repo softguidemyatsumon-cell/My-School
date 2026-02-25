@@ -16,10 +16,6 @@
     const courseSubmenu = document.getElementById("courseSubmenu");
     const courseArrow = document.getElementById("courseArrow");
 
-    const markMenu = document.getElementById("markMenu");
-    const markSubmenu = document.getElementById("markSubmenu");
-    const markArrow = document.getElementById("markArrow");
-
     /* SIDEBAR COLLAPSE */
     toggleSidebar.onclick = () => {
         sidebar.classList.toggle("collapsed");
@@ -40,11 +36,6 @@
      courseMenu.onclick = () => {
         courseSubmenu.classList.toggle("open");
         courseArrow.classList.toggle("rotate");
-    };
-    // Mark submenu collespe
-     markMenu.onclick = () => {
-        markSubmenu.classList.toggle("open");
-        markArrow.classList.toggle("rotate");
     };
 
     const adminBtn = document.getElementById("adminBtn");

@@ -9,30 +9,74 @@ if (isset($_POST['create'])) {
     $gender = $_POST['gender'];
     $date_of_birth = $_POST['date_of_birth'];
     $phone = $_POST['phone'];
+    $email = $_POST['email'];
     $parent_name = $_POST['parent_name'];
     $status = $_POST['status'];
 
-  // Check required fields
-    if (!empty($name) && !empty($class)) {
+    // Basic validation
+    if (empty($name) || empty($class) || empty($email)) {
+        $error = "Name, Class, and Email are required!";
+    } else {
 
-        $stmt = $conn->prepare("INSERT INTO students (name, class, gender, date_of_birth, phone, parent_name, status) 
-        VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssdsss", $name, $class, $gender, $date_of_birth, $phone, $parent_name, $status);
+        // ✅ Check if email already exists
+        $check = $conn->prepare("SELECT id FROM users WHERE user_name = ?");
+        $check->bind_param("s", $email);
+        $check->execute();
+        $check->store_result();
 
-        // Execute the statement
-        if ($stmt->execute()) {
-            $success = "Student Created Successfully!";
+        if ($check->num_rows > 0) {
+
+            // Email already exists
+            $error = "Email already exists!";
+
         } else {
-            $error = "Error: " . $stmt->error;
+
+            $default_password = "student123";
+            $default_role = "student";
+
+            // Insert into users table
+            $user = $conn->prepare("INSERT INTO users (user_name, password, role) VALUES (?, ?, ?)");
+            $user->bind_param("sss", $email, $default_password, $default_role);
+
+            if ($user->execute()) {
+
+                $user_id = $conn->insert_id;
+
+                // Insert into students table
+                $stmt = $conn->prepare("INSERT INTO students 
+                    (name, user_id, class, gender, date_of_birth, phone, email, parent_name, status) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+                $stmt->bind_param(
+                    "sisssssss",
+                    $name,
+                    $user_id,
+                    $class,
+                    $gender,
+                    $date_of_birth,
+                    $phone,
+                    $email,
+                    $parent_name,
+                    $status
+                );
+
+                if ($stmt->execute()) {
+                    $success = "Student Created Successfully!";
+                } else {
+                    $error = "Student Error: " . $stmt->error;
+                }
+
+                $stmt->close();
+
+            } else {
+                $error = "User Error: " . $user->error;
+            }
         }
 
-        // Close statement
-        $stmt->close();
-
-    } else {
-        $error = "Name and Class are required!";
+        $check->close();
     }
 }
+
 require "layout/header.php";
 ?>
 
@@ -52,7 +96,6 @@ require "layout/header.php";
             <?php endif; ?>
 
             <form method="POST">
-
                 <div class="mb-3">
                     <label>Name</label>
                     <input type="text" name="name" class="form-control">
@@ -78,6 +121,10 @@ require "layout/header.php";
                 <div class="mb-3">
                     <label>Phone</label>
                     <input type="text" name="phone" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label>Email</label>
+                    <input type="email" name="email" class="form-control">
                 </div>
 
                 <div class="mb-3">

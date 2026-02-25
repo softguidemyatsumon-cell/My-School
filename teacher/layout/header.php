@@ -254,8 +254,8 @@
             <span class="text">School</span>
         </div>
 
-        <div class="menu-item">            
-            <a href="./index.php" style="text-decoration: none; color:#ffff"><span><i class="fa-solid fa-house-chimney"></i> <span class="text">Dashboard</span></span> </a>
+        <div class="menu-item">
+            <a href="./teacher_dashboard.php" style="text-decoration: none; color:#ffff"><span><i class="fa-solid fa-house-chimney"></i> <span class="text">Dashboard</span></span> </a>
         </div>      
         <!-- teacher menu -->
         <div class="menu-item" id="teacherMenu">
@@ -263,7 +263,6 @@
             <span class="arrow" id="teacherArrow"><i class="fa-solid fa-angle-right"></i></span>
         </div>
         <div class="submenu" id="teacherSubmenu">
-            <a href="teacher_create.php">Create Teacher</a>
             <a href="teacher_list.php">List Teacher</a>
         </div>
 
@@ -274,21 +273,18 @@
         </div>
 
         <div class="submenu" id="studentSubmenu">
-            <a href="student_list.php">Student List</a>
-            <a href="student_create.php">Create Student</a>
+            <a href="student_list.php">List Students</a>
         </div>
-
         <!-- course menu -->
          <div class="menu-item" id="courseMenu">
             <span><i class="fa-solid fa-book-open"></i> <span class="text">Courses</span></span>
             <span class="arrow" id="courseArrow"><i class="fa-solid fa-angle-right"></i></span>
         </div>
         <div class="submenu" id="courseSubmenu">
-            <a href="course_list.php">Course List</a>
-            <a href="course_create.php">Create Course</a>
+            <a href="course_list.php">List Course</a>
         </div>
 
-        <!-- mark menu -->
+          <!-- mark menu -->
         <div class="menu-item" id="markMenu">
             <span><i class="fa-solid fa-tag me-2"></i><span class="text">Mark</span></span>
             <span class="arrow" id="markArrow"><i class="fa-solid fa-angle-right"></i></span>
@@ -297,12 +293,7 @@
             <a href="">Mark List</a>
             <a href="">Create Mark</a>
         </div>
-
-        <!-- user -->
-         <div class="menu-item">            
-            <a href="" style="text-decoration: none; color:#ffff"><span> <i class="fa-solid fa-users"></i> <span class="text">Users</span></span> </a>
-        </div>       
-
+        
         <!-- logout -->
         <div class="ms-4">
             <a href="../index.php" style="text-decoration: none; color:#ffff">
@@ -317,7 +308,7 @@
         <!-- TOPBAR -->
         <div class="admin-menu">
             <span class="toggle-btn btn btn-outline-primary" id="toggleSidebar"><i class="fa-solid fa-bars"></i></span>            
-            <button id="adminBtn" class="admin-button"><i class="fa-solid fa-user-tie me-2"></i>Admin</button>
+            <button id="adminBtn" class="admin-button"><i class="fa-solid fa-user-tie me-2"></i>Teacher</button>
       
             <div id="dropdown" class="dropdown hidden">
                 <a href="../index.php">Logout</a>

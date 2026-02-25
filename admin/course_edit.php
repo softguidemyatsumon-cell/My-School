@@ -64,7 +64,7 @@ require "layout/header.php";
                             </select>
                         </div> 
 
-                        <input type="submit" name="update" value="Update">
+                        <input type="submit" name="update" class="btn btn-primary" value="Update">
                     </form>
             </div>
         </div>

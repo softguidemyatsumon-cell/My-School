@@ -25,11 +25,12 @@ if (isset($_POST['update'])) {
     $gender = $conn->real_escape_string($_POST['gender']);
     $date_of_birth = $conn->real_escape_string($_POST['date_of_birth']);
     $phone = $conn->real_escape_string($_POST['phone']);
+    $email = $conn->real_escape_string($_POST['email']);
     $parent_name = $conn->real_escape_string($_POST['parent_name']);
     $status = $conn->real_escape_string($_POST['status']);
 
     $updateSql = "UPDATE students 
-                  SET name='$name', class='$class', gender='$gender', date_of_birth='$date_of_birth', phone='$phone',
+                  SET name='$name', class='$class', gender='$gender', date_of_birth='$date_of_birth', phone='$phone', email='$email',
                   parent_name='$parent_name', status='$status'
                   WHERE id=$id";
 
@@ -73,6 +74,10 @@ require "layout/header.php";
                             <label>Phone</label>
                             <input type="text" name="phone" class="form-control" value="<?php echo htmlspecialchars($student['phone']); ?>">
                         </div>
+                        <div class="mb-3">
+                            <label>Email</label>
+                            <input type="text" name="email" class="form-control" value="<?php echo htmlspecialchars($student['email']); ?>">
+                        </div>
 
                         <div class="mb-3">
                             <label>Parent Name</label>
@@ -86,7 +91,7 @@ require "layout/header.php";
                             </select>
                         </div> 
 
-                        <input type="submit" name="update" value="Update">
+                        <input type="submit" name="update" class="btn btn-primary float-end" value="Update">
                     </form>
             </div>
         </div>
