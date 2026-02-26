@@ -300,7 +300,7 @@
 
         <!-- user -->
          <div class="menu-item">            
-            <a href="" style="text-decoration: none; color:#ffff"><span> <i class="fa-solid fa-users"></i> <span class="text">Users</span></span> </a>
+            <a href="user_list.php" style="text-decoration: none; color:#ffff"><span> <i class="fa-solid fa-users"></i> <span class="text">Users</span></span> </a>
         </div>       
 
         <!-- logout -->

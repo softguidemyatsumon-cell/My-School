@@ -17,6 +17,8 @@ if ($result->num_rows != 1) {
 }
 
 $student = $result->fetch_assoc();
+$student_user_id=$student['user_id'];
+$user_name= mysqli_query($conn,"SELECT user_name FROM users WHERE id=$student_user_id");
 
 // Handle form submission
 if (isset($_POST['update'])) {
@@ -29,17 +31,17 @@ if (isset($_POST['update'])) {
     $parent_name = $conn->real_escape_string($_POST['parent_name']);
     $status = $conn->real_escape_string($_POST['status']);
 
-    $updateSql = "UPDATE students 
+     if($user_name !=$email){
+        $sql=mysqli_query($conn,"UPDATE users SET user_name ='$email' WHERE id=$student_user_id ");    
+    }
+    mysqli_query($conn,"UPDATE students 
                   SET name='$name', class='$class', gender='$gender', date_of_birth='$date_of_birth', phone='$phone', email='$email',
                   parent_name='$parent_name', status='$status'
-                  WHERE id=$id";
+                  WHERE id=$id");
 
-    if ($conn->query($updateSql) === TRUE) {
-        header("Location:student_list.php");
-        exit;
-    } else {
-        echo "Error updating student: " . $conn->error;
-    }
+     header("Location:student_list.php");
+        exit();
+    
 }
 require "layout/header.php";
 ?>

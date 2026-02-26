@@ -18,6 +18,9 @@ if ($result->num_rows != 1) {
 
 $teacher = $result->fetch_assoc();
 
+$teacher_user_id=$teacher['user_id'];
+$user_name= mysqli_query($conn,"SELECT user_name FROM users WHERE id=$teacher_user_id");
+
 // Handle form submission
 if (isset($_POST['update'])) {
     $name = $conn->real_escape_string($_POST['name']);
@@ -29,18 +32,19 @@ if (isset($_POST['update'])) {
     $salary = $conn->real_escape_string($_POST['salary']);
     $status = $conn->real_escape_string($_POST['status']);
 
-    $updateSql = "UPDATE teachers 
+    if($user_name !=$email){
+        $sql=mysqli_query($conn,"UPDATE users SET user_name ='$email' WHERE id=$teacher_user_id ");    
+    }
+
+    mysqli_query($conn, "UPDATE teachers 
                   SET name='$name', gender='$gender', email='$email', phone='$phone', qualification='$qualification',
                   join_date='$join_date', salary='$salary', status='$status'
-                  WHERE id=$id";
+                  WHERE id=$id");    
 
-    if ($conn->query($updateSql) === TRUE) {
         header("Location:teacher_list.php");
-        exit;
-    } else {
-        echo "Error updating teacher: " . $conn->error;
-    }
-}
+        exit();
+    } 
+
 require "layout/header.php";
 ?>
     <div class="container mt-5">

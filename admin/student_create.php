@@ -18,7 +18,7 @@ if (isset($_POST['create'])) {
         $error = "Name, Class, and Email are required!";
     } else {
 
-        // ✅ Check if email already exists
+        //  Check if email already exists
         $check = $conn->prepare("SELECT id FROM users WHERE user_name = ?");
         $check->bind_param("s", $email);
         $check->execute();

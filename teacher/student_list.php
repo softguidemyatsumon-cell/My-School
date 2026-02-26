@@ -10,9 +10,6 @@
     <div class="container-fluid">
         <div class="justify-content-between d-flex mb-3 mt-5">
             <h1>Student List</h1>
-            <a href="<?= $admin_base_url . 'student_create.php' ?>" class="btn btn-primary">
-                Create student
-            </a>
         </div>
 
         <div class="row">            
@@ -31,7 +28,6 @@
                                     <th>Email</th>
                                     <th>Parent Name</th>
                                     <th>Status</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -49,11 +45,7 @@
                                     <td><?=$row['email']?></td>
                                     <td><?=$row['parent_name']?></td>
                                     <td><?=$row['status']?></td>
-                                    <td>
-                                        <a href="student_edit.php?id=<?= $row['id']; ?>" class="text-primary me-3 text-decoration-none"><i class="fa-regular fa-pen-to-square me-1"></i>Update</a>
-                                        <a href="student_delete.php?id=<?= $row['id']; ?>" onclick="return confirm('Are you sure you want to delete this teacher?');" class="text-danger text-decoration-none">
-                                            <i class="fa-solid fa-trash-can me-1"></i>Delete</a>
-                                    </td>
+                                 
                                 </tr>
                                 <?php endwhile; ?>
                             </tbody>
